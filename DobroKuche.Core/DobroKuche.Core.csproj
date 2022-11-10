@@ -10,4 +10,10 @@
     <ProjectReference Include="..\DobroKuche.Infrastructure\DobroKuche.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Contracts\" />
+    <Folder Include="Models\" />
+    <Folder Include="Services\" />
+  </ItemGroup>
+
 </Project>

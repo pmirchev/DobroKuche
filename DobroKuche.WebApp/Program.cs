@@ -1,5 +1,5 @@
 using DobroKuche.Infrastructure.Data;
-using Microsoft.AspNetCore.Identity;
+using DobroKuche.Infrastructure.Data.Models;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,12 +9,25 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options =>
+builder.Services.AddDefaultIdentity<AppUser>(options =>
 {
-    options.SignIn.RequireConfirmedAccount = true;
+    options.SignIn.RequireConfirmedAccount = builder.Configuration.GetValue<bool>("Identity:RequireConfirmedAccount");
+    options.Password.RequireDigit = builder.Configuration.GetValue<bool>("Identity:RequireDigit");
+    options.Password.RequireNonAlphanumeric = builder.Configuration.GetValue<bool>("Identity:RequireNonAlphanumeric");
+    options.Password.RequiredLength = builder.Configuration.GetValue<int>("Identity:RequiredLength");
+    options.Password.RequireLowercase = builder.Configuration.GetValue<bool>("Identity:RequireLowercase");
+    options.Password.RequireUppercase = builder.Configuration.GetValue<bool>("Identity:RequireUppercase");
 })
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/User/Login";
+    options.Cookie.MaxAge = TimeSpan.FromDays(1);
+});
+
 builder.Services.AddControllersWithViews();
+builder.Services.AddApplicationServices();
 
 var app = builder.Build();
 
