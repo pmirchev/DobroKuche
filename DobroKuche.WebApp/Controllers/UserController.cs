@@ -6,17 +6,20 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
-	public class UserController : BaseController
+    public class UserController : BaseController
     {
         private readonly UserManager<AppUser> userManager;
         private readonly SignInManager<AppUser> signInManager;
+        //private readonly RoleManager<AppUser> roleManager;
 
         public UserController(
             UserManager<AppUser> _userManager,
-            SignInManager<AppUser> _signInManager)
+            SignInManager<AppUser> _signInManager
+            /*RoleManager<AppUser> _roleManager*/)
         {
-            this.userManager = _userManager;
-            this.signInManager = _signInManager;
+            userManager = _userManager;
+            signInManager = _signInManager;
+            //roleManager = _roleManager;
         }
 
         [HttpGet]
@@ -35,6 +38,7 @@
 
         [HttpPost]
         [AllowAnonymous]
+        [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (!ModelState.IsValid)
@@ -53,6 +57,8 @@
             var result = await userManager.CreateAsync(user, model.Password);
             await userManager.AddClaimAsync(user, new System.Security.Claims.Claim("first_name", user.FirstName));
             await userManager.AddClaimAsync(user, new System.Security.Claims.Claim("last_name", user.LastName));
+
+
 
             if (result.Succeeded)
             {
@@ -83,7 +89,8 @@
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Login(LoginViewModel model)
+		[AutoValidateAntiforgeryToken]
+		public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (!ModelState.IsValid)
             {

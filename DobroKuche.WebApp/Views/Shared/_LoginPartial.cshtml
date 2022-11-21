@@ -3,25 +3,26 @@
 @inject SignInManager<AppUser> SignInManager
 @inject UserManager<AppUser> UserManager
 
+
 <ul class="navbar-nav">
 	@if (SignInManager.IsSignedIn(User))
 	{
 		<li class="nav-item">
-			<a class="nav-link text-danger" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage" title="Manage">Hello @ViewBag.UserFullName</a>
+			<a class="nav-link text-danger" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage" title="Manage">Здравей @ViewBag.UserFullName</a>
 		</li>
 		<li class="nav-item">
 			<form class="form-inline" asp-controller="User" asp-action="Logout" asp-route-id="@UserManager.GetUserId(User)">
-				<button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+				<button type="submit" class="nav-link btn btn-link text-dark">Изход</button>
 			</form>
 		</li>
 	}
 	else
 	{
 		<li class="nav-item">
-			<a class="nav-link text-dark" asp-controller="User" asp-action="Register">Register</a>
+			<a class="nav-link text-dark" asp-controller="User" asp-action="Register">Регистрация</a>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link text-dark" asp-controller="User" asp-action="Login">Login</a>
+			<a class="nav-link text-dark" asp-controller="User" asp-action="Login">Вход</a>
 		</li>
 	}
 </ul>

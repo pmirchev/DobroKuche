@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DobroKuche.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221109111305_Initial")]
-    partial class Initial
+    [Migration("20221120170145_CreateDb")]
+    partial class CreateDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -24,19 +24,74 @@ namespace DobroKuche.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("AppUserCource", b =>
+            modelBuilder.Entity("AppUserCourse", b =>
                 {
-                    b.Property<int>("CourcesId")
+                    b.Property<int>("CoursesId")
                         .HasColumnType("int");
 
                     b.Property<string>("ParticipantsId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("CourcesId", "ParticipantsId");
+                    b.HasKey("CoursesId", "ParticipantsId");
 
                     b.HasIndex("ParticipantsId");
 
-                    b.ToTable("AppUserCource");
+                    b.ToTable("AppUserCourse");
+                });
+
+            modelBuilder.Entity("ArticleTag", b =>
+                {
+                    b.Property<int>("ArticlesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TagsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("ArticlesId", "TagsId");
+
+                    b.HasIndex("TagsId");
+
+                    b.ToTable("ArticleTag");
+                });
+
+            modelBuilder.Entity("CourseTypeOfExercise", b =>
+                {
+                    b.Property<int>("CoursesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TypesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CoursesId", "TypesId");
+
+                    b.HasIndex("TypesId");
+
+                    b.ToTable("CourseTypeOfExercise");
+                });
+
+            modelBuilder.Entity("DobroKuche.Infrastructure.Data.Models.Appointment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<bool?>("Confirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Appointments");
                 });
 
             modelBuilder.Entity("DobroKuche.Infrastructure.Data.Models.AppUser", b =>
@@ -51,6 +106,12 @@ namespace DobroKuche.Infrastructure.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -59,7 +120,6 @@ namespace DobroKuche.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
@@ -67,7 +127,6 @@ namespace DobroKuche.Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
 
@@ -132,18 +191,27 @@ namespace DobroKuche.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(2147483647)
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastUpdatedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<int?>("Type")
-                        .HasColumnType("int");
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
 
                     b.HasKey("Id");
 
@@ -152,7 +220,7 @@ namespace DobroKuche.Infrastructure.Migrations
                     b.ToTable("Articles");
                 });
 
-            modelBuilder.Entity("DobroKuche.Infrastructure.Data.Models.Cource", b =>
+            modelBuilder.Entity("DobroKuche.Infrastructure.Data.Models.Course", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -160,28 +228,37 @@ namespace DobroKuche.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("AgeGroups")
+                    b.Property<int>("AgeGroup")
                         .HasColumnType("int");
 
-                    b.Property<int>("Categories")
+                    b.Property<int>("Category")
                         .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastUpdatedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
-                    b.Property<int>("Types")
-                        .HasColumnType("int");
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Cources");
+                    b.ToTable("Courses");
                 });
 
             modelBuilder.Entity("DobroKuche.Infrastructure.Data.Models.Dog", b =>
@@ -198,6 +275,12 @@ namespace DobroKuche.Infrastructure.Migrations
                     b.Property<string>("Breed")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DeletedOn")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .HasMaxLength(60)
@@ -230,8 +313,23 @@ namespace DobroKuche.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("ArticleId")
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tags");
+                });
+
+            modelBuilder.Entity("DobroKuche.Infrastructure.Data.Models.TypeOfExercise", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -240,9 +338,7 @@ namespace DobroKuche.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ArticleId");
-
-                    b.ToTable("Tags");
+                    b.ToTable("TypesOfExercise");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -354,7 +450,12 @@ namespace DobroKuche.Infrastructure.Migrations
                     b.Property<string>("RoleId")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("AppUserId");
 
                     b.HasIndex("RoleId");
 
@@ -382,11 +483,11 @@ namespace DobroKuche.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("AppUserCource", b =>
+            modelBuilder.Entity("AppUserCourse", b =>
                 {
-                    b.HasOne("DobroKuche.Infrastructure.Data.Models.Cource", null)
+                    b.HasOne("DobroKuche.Infrastructure.Data.Models.Course", null)
                         .WithMany()
-                        .HasForeignKey("CourcesId")
+                        .HasForeignKey("CoursesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -395,6 +496,47 @@ namespace DobroKuche.Infrastructure.Migrations
                         .HasForeignKey("ParticipantsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("ArticleTag", b =>
+                {
+                    b.HasOne("DobroKuche.Infrastructure.Data.Models.Article", null)
+                        .WithMany()
+                        .HasForeignKey("ArticlesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DobroKuche.Infrastructure.Data.Models.Tag", null)
+                        .WithMany()
+                        .HasForeignKey("TagsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("CourseTypeOfExercise", b =>
+                {
+                    b.HasOne("DobroKuche.Infrastructure.Data.Models.Course", null)
+                        .WithMany()
+                        .HasForeignKey("CoursesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DobroKuche.Infrastructure.Data.Models.TypeOfExercise", null)
+                        .WithMany()
+                        .HasForeignKey("TypesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("DobroKuche.Infrastructure.Data.Models.Appointment", b =>
+                {
+                    b.HasOne("DobroKuche.Infrastructure.Data.Models.AppUser", "User")
+                        .WithMany("Appointments")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("DobroKuche.Infrastructure.Data.Models.Article", b =>
@@ -417,13 +559,6 @@ namespace DobroKuche.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("Owner");
-                });
-
-            modelBuilder.Entity("DobroKuche.Infrastructure.Data.Models.Tag", b =>
-                {
-                    b.HasOne("DobroKuche.Infrastructure.Data.Models.Article", null)
-                        .WithMany("Tags")
-                        .HasForeignKey("ArticleId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -455,6 +590,10 @@ namespace DobroKuche.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
+                    b.HasOne("DobroKuche.Infrastructure.Data.Models.AppUser", null)
+                        .WithMany("Roles")
+                        .HasForeignKey("AppUserId");
+
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
@@ -479,14 +618,13 @@ namespace DobroKuche.Infrastructure.Migrations
 
             modelBuilder.Entity("DobroKuche.Infrastructure.Data.Models.AppUser", b =>
                 {
+                    b.Navigation("Appointments");
+
                     b.Navigation("Articles");
 
                     b.Navigation("Dogs");
-                });
 
-            modelBuilder.Entity("DobroKuche.Infrastructure.Data.Models.Article", b =>
-                {
-                    b.Navigation("Tags");
+                    b.Navigation("Roles");
                 });
 #pragma warning restore 612, 618
         }

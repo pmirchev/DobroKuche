@@ -20,4 +20,8 @@
     <ProjectReference Include="..\DobroKuche.Core\DobroKuche.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\Identity\Pages\Course\" />
+  </ItemGroup>
+
 </Project>

@@ -10,7 +10,7 @@
         public Article()
         {
             Tags = new List<Tag>();
-            CreatedOn = DateTime.Now;
+			CreatedOn = DateTime.Now;
             LastUpdatedOn = CreatedOn;
             IsDeleted = false;
 
@@ -24,7 +24,7 @@
         public string Title { get; set; } = null!;
 
         [Required(AllowEmptyStrings = false)]
-        [MaxLength(DataConstants.ArticleTitleMaxLeght)]
+        [MaxLength(DataConstants.ArticleDescriptionMaxLeght)]
         public string Description { get; set; } = null!;
 
         [Required(AllowEmptyStrings = false)]
@@ -33,8 +33,6 @@
         public AppUser Author { get; set; } = null!;
 
         public AgeGroup? AgeGroup { get; set; }
-
-        public Type? Type { get; set; }
 
         public DateTime CreatedOn { get; set; }
 

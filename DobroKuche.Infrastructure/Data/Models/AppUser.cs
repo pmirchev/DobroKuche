@@ -9,30 +9,34 @@
         public AppUser()
         {
             Dogs = new List<Dog>();
-            Cources = new List<Cource>();
+            Courses = new List<Course>();
             Articles = new List<Article>();
-            CreatedOn = DateTime.Now;
+			Appointments = new List<Appointment>();
+            Roles = new List<IdentityUserRole<string>>();
+			CreatedOn = DateTime.Now;
             IsDeleted = false;
         }
 
-        [Required(AllowEmptyStrings = false)]
         [MaxLength(DataConstants.UserFirstNameMaxLenght)]
-        public string FirstName { get; set; } = null!;
+        public string? FirstName { get; set; }
 
-        [Required(AllowEmptyStrings = false)]
         [MaxLength(DataConstants.UserLastNameMaxLenght)]
-        public string LastName { get; set; } = null!;
-
-        public List<Dog> Dogs { get; set; }
-
-        public List<Cource> Cources { get; set; }
-
-        public List<Article> Articles { get; set; }
+        public string? LastName { get; set; }
 
         public DateTime CreatedOn { get; set; }
 
         public bool IsDeleted { get; set; }
 
         public DateTime? DeletedOn { get; set; }
+
+        public List<Dog> Dogs { get; set; }
+
+        public List<Course> Courses { get; set; }
+
+        public List<Article> Articles { get; set; }
+
+        public List<Appointment> Appointments { get; set; }
+
+        public List<IdentityUserRole<string>> Roles { get; set; }
     }
 }
