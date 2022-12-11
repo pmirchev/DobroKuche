@@ -14,13 +14,11 @@
         [StringLength(DataConstants.EmailMaxLenght, MinimumLength = DataConstants.EmailMinLenght)]
         public string Email { get; set; } = null!;
 
-        [Required(AllowEmptyStrings = false)]
         [StringLength(DataConstants.UserFirstNameMaxLenght, MinimumLength = DataConstants.UserFirstNameMinLenght)]
-        public string FirstName { get; set; } = null!;
+        public string? FirstName { get; set; }
 
-        [Required(AllowEmptyStrings = false)]
         [StringLength(DataConstants.UserLastNameMaxLenght, MinimumLength = DataConstants.UserLastNameMinLenght)]
-        public string LastName { get; set; } = null!;
+        public string? LastName { get; set; }
 
         [Required(AllowEmptyStrings = false)]
         [DataType(DataType.Password)]

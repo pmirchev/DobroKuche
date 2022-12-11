@@ -8,7 +8,7 @@
 	@if (SignInManager.IsSignedIn(User))
 	{
 		<li class="nav-item">
-			<a class="nav-link text-danger" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage" title="Manage">Здравей @ViewBag.UserFullName</a>
+			<a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage" title="Manage">Здравей @ViewBag.Email</a>
 		</li>
 		<li class="nav-item">
 			<form class="form-inline" asp-controller="User" asp-action="Logout" asp-route-id="@UserManager.GetUserId(User)">
@@ -19,10 +19,7 @@
 	else
 	{
 		<li class="nav-item">
-			<a class="nav-link text-dark" asp-controller="User" asp-action="Register">Регистрация</a>
-		</li>
-		<li class="nav-item">
-			<a class="nav-link text-dark" asp-controller="User" asp-action="Login">Вход</a>
+			<a class="nav-link" asp-controller="User" asp-action="Login">Вход</a>
 		</li>
 	}
 </ul>

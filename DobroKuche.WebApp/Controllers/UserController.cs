@@ -1,124 +1,128 @@
 ﻿namespace DobroKuche.WebApp.Controllers
 {
-    using DobroKuche.Infrastructure.Data.Models;
-    using DobroKuche.WebApp.Models;
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Identity;
-    using Microsoft.AspNetCore.Mvc;
+	using DobroKuche.Core.Contracts;
+	using DobroKuche.Infrastructure.Data.Models;
+	using DobroKuche.WebApp.Models;
+	using Microsoft.AspNetCore.Authorization;
+	using Microsoft.AspNetCore.Identity;
+	using Microsoft.AspNetCore.Mvc;
 
-    public class UserController : BaseController
-    {
-        private readonly UserManager<AppUser> userManager;
-        private readonly SignInManager<AppUser> signInManager;
-        //private readonly RoleManager<AppUser> roleManager;
+	public class UserController : BaseController
+	{
+		private readonly UserManager<AppUser> userManager;
+		private readonly SignInManager<AppUser> signInManager;
 
-        public UserController(
-            UserManager<AppUser> _userManager,
-            SignInManager<AppUser> _signInManager
-            /*RoleManager<AppUser> _roleManager*/)
-        {
-            userManager = _userManager;
-            signInManager = _signInManager;
-            //roleManager = _roleManager;
-        }
+		public UserController(
+			UserManager<AppUser> _userManager,
+			SignInManager<AppUser> _signInManager)
+		{
+			userManager = _userManager;
+			signInManager = _signInManager;
+		}
 
-        [HttpGet]
-        [AllowAnonymous]
-        public IActionResult Register()
-        {
-            if (User?.Identity?.IsAuthenticated ?? false)
-            {
-                return RedirectToAction("Index", "Home");
-            }
+		[HttpGet]
+		[AllowAnonymous]
+		public IActionResult Register()
+		{
+			if (User?.Identity?.IsAuthenticated ?? false)
+			{
+				return RedirectToAction("Index", "Home");
+			}
 
-            var model = new RegisterViewModel();
+			var model = new RegisterViewModel();
 
-            return View(model);
-        }
+			return View(model);
+		}
 
-        [HttpPost]
-        [AllowAnonymous]
-        [AutoValidateAntiforgeryToken]
-        public async Task<IActionResult> Register(RegisterViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
+		[HttpPost]
+		[AllowAnonymous]
+		[AutoValidateAntiforgeryToken]
+		public async Task<IActionResult> Register(RegisterViewModel model)
+		{
+			if (!ModelState.IsValid)
+			{
+				return View(model);
+			}
 
-            var user = new AppUser()
-            {
-                UserName = model.UserName,
-                Email = model.Email,
-                FirstName = model.FirstName,
-                LastName = model.LastName
-            };
+			var user = new AppUser()
+			{
+				UserName = model.UserName,
+				Email = model.Email,
+				FirstName = model.FirstName,
+				LastName = model.LastName
+			};
 
-            var result = await userManager.CreateAsync(user, model.Password);
-            await userManager.AddClaimAsync(user, new System.Security.Claims.Claim("first_name", user.FirstName));
-            await userManager.AddClaimAsync(user, new System.Security.Claims.Claim("last_name", user.LastName));
+			var result = await userManager.CreateAsync(user, model.Password);
 
+			if (user.FirstName != null)
+			{
+				await userManager.AddClaimAsync(user, new System.Security.Claims.Claim("first_name", user.FirstName));
+			}
 
+			if (user.LastName != null)
+			{
+				await userManager.AddClaimAsync(user, new System.Security.Claims.Claim("last_name", user.LastName));
+			}
 
-            if (result.Succeeded)
-            {
-                return RedirectToAction("Login", "User");
-            }
+			if (result.Succeeded)
+			{
+				return RedirectToAction("Login", "User");
+			}
 
-            foreach (var item in result.Errors)
-            {
-                ModelState.AddModelError("", item.Description);
-            }
+			foreach (var item in result.Errors)
+			{
+				ModelState.AddModelError("", item.Description);
+			}
 
-            return View(model);
-        }
+			return View(model);
+		}
 
-        [HttpGet]
-        [AllowAnonymous]
-        public IActionResult Login()
-        {
-            if (User?.Identity?.IsAuthenticated ?? false)
-            {
-                return RedirectToAction("Index", "Home");
-            }
+		[HttpGet]
+		[AllowAnonymous]
+		public IActionResult Login()
+		{
+			if (User?.Identity?.IsAuthenticated ?? false)
+			{
+				return RedirectToAction("Index", "Home");
+			}
 
-            var model = new LoginViewModel();
+			var model = new LoginViewModel();
 
-            return View(model);
-        }
+			return View(model);
+		}
 
-        [HttpPost]
-        [AllowAnonymous]
+		[HttpPost]
+		[AllowAnonymous]
 		[AutoValidateAntiforgeryToken]
 		public async Task<IActionResult> Login(LoginViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
+		{
+			if (!ModelState.IsValid)
+			{
+				return View(model);
+			}
 
-            var user = await userManager.FindByNameAsync(model.UserName);
+			var user = await userManager.FindByEmailAsync(model.Email);
 
-            if (user != null)
-            {
-                var result = await signInManager.PasswordSignInAsync(user, model.Password, false, false);
+			if (user != null)
+			{
+				var result = await signInManager.PasswordSignInAsync(user, model.Password, false, false);
 
-                if (result.Succeeded)
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-            }
+				if (result.Succeeded)
+				{
+					return RedirectToAction("Index", "Home");
+				}
+			}
 
-            ModelState.AddModelError("", "Invalid login");
+			ModelState.AddModelError("", "Invalid login");
 
-            return View(model);
-        }
+			return View(model);
+		}
 
-        public async Task<IActionResult> Logout()
-        {
-            await signInManager.SignOutAsync();
+		public async Task<IActionResult> Logout()
+		{
+			await signInManager.SignOutAsync();
 
-            return RedirectToAction("Index", "Home");
-        }
-    }
+			return RedirectToAction("Index", "Home");
+		}
+	}
 }

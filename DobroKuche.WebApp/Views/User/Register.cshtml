@@ -4,50 +4,65 @@
     ViewData["Title"] = "Регистрация";
 }
 
-<h1 class="text-center">@ViewData["Title"]</h1>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link href="https://fonts.googleapis.com/css?family=Karla:400,700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.materialdesignicons.com/4.8.95/css/materialdesignicons.min.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="~/css/login.css">
+	<link href="~/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="~/css/style.css" rel="stylesheet" asp-append-version="true" />
+</head>
 
-
-<div class="row">
-    <div class="col-md-4 offset-md-4">
-        <form id="registerForm" method="post">
-            <hr />
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="text-center mb-3">
-                <label asp-for="@Model.UserName">Потребителско име</label>
-                <input class="form-control " autocomplete="username" aria-required="true" asp-for="@Model.UserName" />
-                <span asp-validation-for="@Model.UserName" class="text-danger"></span>
-            </div>
-            <div class="text-center mb-3">
-                <label asp-for="@Model.Email">Email</label>
-                <input class="form-control " autocomplete="email" aria-required="true" asp-for="@Model.Email" />
-                <span asp-validation-for="@Model.Email" class="text-danger"></span>
-            </div>
-            <div class="text-center mb-3">
-                <label asp-for="@Model.FirstName">Име</label>
-                <input class="form-control " autocomplete="firstname" aria-required="true" asp-for="@Model.FirstName" />
-                <span asp-validation-for="@Model.FirstName" class="text-danger"></span>
-            </div>
-            <div class="text-center mb-3">
-                <label asp-for="@Model.LastName">Фамилия</label>
-                <input class="form-control " autocomplete="lastname" aria-required="true" asp-for="@Model.LastName" />
-                <span asp-validation-for="@Model.LastName" class="text-danger"></span>
-            </div>
-            <div class="text-center mb-3">
-                <label asp-for="@Model.Password">Парола</label>
-                <input class="form-control" type="password" autocomplete="new-password" aria-required="true" asp-for="@Model.Password" />
-                <span asp-validation-for="@Model.Password" class="text-danger"></span>
-            </div>
-            <div class="text-center mb-3">
-                <label asp-for="@Model.ConfirmPassword">Потвърди паролата</label>
-                <input class="form-control" type="password" autocomplete="new-password" aria-required="true" asp-for="@Model.ConfirmPassword" />
-                <span asp-validation-for="@Model.ConfirmPassword" class="text-danger"></span>
-            </div>
-            <div class="text-center">
-                <button id="registerSubmit" type="submit" class="btn btn-primary">Регистрация</button>
-            </div>
-        </form>
-    </div>
-</div>
+<body>
+	<main class="d-flex align-items-center min-vh-100 py-3 py-md-0">
+		<div class="container">
+			<div class="card login-card">
+				<div class="row no-gutters">
+					<div class="col-md-5">
+						<img src="~/img/register-dog-2.jpg" alt="login" class="login-card-img">
+					</div>
+					<div class="col-md-7">
+						<div class="card-body">
+							<div class="brand-wrapper">
+								<img src="~/img/logo-dog.svg" alt="logo" class="img-fluid">
+							</div>
+							<p class="login-card-description">Регистрация</p>
+							<form id="registerForm" method="post">
+								<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+								<div class="form-group">
+									<label asp-for="@Model.Email" for="email" class="sr-only">Email</label>
+									<input asp-for="@Model.Email" type="email" name="email" id="email" class="form-control" placeholder="Email" aria-required="true">
+									<span asp-validation-for="@Model.Email" class="text-danger"></span>
+								</div>
+								<div class="form-group mb-4">
+									<label asp-for="@Model.Password" for="password" class="sr-only">Парола</label>
+									<input asp-for="@Model.Password" type="password" name="password" id="password" class="form-control" placeholder="Парола" aria-required="true">
+									<span asp-validation-for="@Model.Password" class="text-danger"></span>
+								</div>
+								<div class="form-group mb-4">
+									<label asp-for="@Model.ConfirmPassword" for="password" class="sr-only">Потвърди паролата</label>
+									<input asp-for="@Model.ConfirmPassword" type="password" name="password" id="password" class="form-control" placeholder="Потвърди паролата" aria-required="true">
+									<span asp-validation-for="@Model.ConfirmPassword" class="text-danger"></span>
+								</div>
+								<button id="register-submit" type="submit" class="btn btn-block login-btn mb-4">Регистрация</button>
+							</form>
+							<nav class="login-card-footer-nav">
+								@*<a href="#!">Terms of use.</a>
+								<a href="#!">Privacy policy</a>*@
+							</nav>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+</body>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />

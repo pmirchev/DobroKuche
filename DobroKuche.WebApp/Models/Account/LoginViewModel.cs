@@ -5,7 +5,7 @@
     public class LoginViewModel
     {
         [Required]
-        public string UserName { get; set; } = null!;
+        public string Email { get; set; } = null!;
 
         [Required]
         [DataType(DataType.Password)]

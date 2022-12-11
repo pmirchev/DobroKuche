@@ -3,11 +3,12 @@
 	using Microsoft.AspNetCore.Authorization;
 	using Microsoft.AspNetCore.Mvc;
 	using Microsoft.AspNetCore.Mvc.Filters;
+	using System.Text;
 
 	[Authorize]
 	public class BaseController : Controller
 	{
-		public string UserFullName
+		public string UserName
 		{
 			get
 			{
@@ -24,7 +25,7 @@
 
 		public override void OnActionExecuted(ActionExecutedContext context)
 		{
-			ViewBag.UserFullName = UserFullName;
+			ViewBag.UserFullName = UserName;
 
 			base.OnActionExecuted(context);
 		}
