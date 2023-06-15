@@ -9,7 +9,7 @@
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             services.AddScoped<IRepository, Repository>();
-            services.AddScoped<ICourceService, CourceService>();
+            services.AddScoped<ICourseService, CourseService>();
 
             return services;
         }

@@ -2,7 +2,7 @@
 {
 	using DobroKuche.Core.Models;
 
-	public interface ICourceService
+	public interface ICourseService
 	{
 		Task<IEnumerable<CourseModel>> GetAllCoursesAsync();
 

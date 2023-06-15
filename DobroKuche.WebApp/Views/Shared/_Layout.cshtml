@@ -38,8 +38,11 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarCollapse">
 				<ul class="navbar-nav flex-grow-1">
-					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" asp-area="" asp-controller="Cource" asp-action="Index">Курсове</a>
+					<li class="nav-item">
+						<a class="nav-link" asp-area="" asp-controller="Course" asp-action="AllCourses">Курсове</a>
+					</li>
+					@*<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" asp-area="" asp-controller="CourseController" asp-action="AllCourses">Курсове</a>
 						<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 							<li>
 								<a class="dropdown-item" href="#">Онлайн обучения</a>
@@ -51,7 +54,7 @@
 								<a class="dropdown-item" href="#">Групови обучения</a>
 							</li>
 						</ul>
-					</li>
+					</li>*@
 				</ul>
 				<partial name="_LoginPartial" />
 			</div>
@@ -150,15 +153,15 @@
 				<div class="col-md-6 text-center text-md-start">
 					@if (DateTime.UtcNow.Year == 2022)
 					{
-						<p class="mb-md-0">@DateTime.UtcNow.Year - <a class="text-white" asp-area="" asp-controller="Home" asp-action="Index">Добро Куче.</a>. Всички права запазени.</p>
+						<p class="mb-md-0">@DateTime.UtcNow.Year - <a class="text-white" asp-area="" asp-controller="Home" asp-action="Index">Добро Куче. </a>Всички права запазени.</p>
 					}
 					else
 					{
-						<p class="mb-md-0">2022 - @DateTime.UtcNow.Year<a class="text-white" asp-area="" asp-controller="Home" asp-action="Index">Добро Куче.</a>. Всички права запазени.</p>
+						<p class="mb-md-0">2022 - @DateTime.UtcNow.Year<a class="text-white" asp-area="" asp-controller="Home" asp-action="Index">Добро Куче. </a>Всички права запазени.</p>
 					}
 				</div>
 				<div class="col-md-6 text-center text-md-end">
-					<p class="mb-0">Designed by Павел Мирчев</p>
+					<p class="mb-0">Designed by Pavel Mirchev</p>
 				</div>
 			</div>
 		</div>

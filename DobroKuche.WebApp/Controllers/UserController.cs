@@ -1,6 +1,5 @@
 ﻿namespace DobroKuche.WebApp.Controllers
 {
-	using DobroKuche.Core.Contracts;
 	using DobroKuche.Infrastructure.Data.Models;
 	using DobroKuche.WebApp.Models;
 	using Microsoft.AspNetCore.Authorization;

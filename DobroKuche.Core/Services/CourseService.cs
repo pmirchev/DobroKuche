@@ -8,11 +8,11 @@
 	using System.Collections.Generic;
 	using System.Threading.Tasks;
 
-	public class CourceService : ICourceService
+	public class CourseService : ICourseService
 	{
 		private readonly IRepository repository;
 
-		public CourceService(IRepository _repository)
+		public CourseService(IRepository _repository)
 		{
 			repository = _repository;
 		}

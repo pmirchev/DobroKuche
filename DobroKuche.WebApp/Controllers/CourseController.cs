@@ -4,19 +4,22 @@
 	using Microsoft.AspNetCore.Authorization;
 	using Microsoft.AspNetCore.Mvc;
 
-	public class CourceController : BaseController
+	public class CourseController : BaseController
 	{
-		private readonly ICourceService courceService;
+		private readonly ICourseService courseService;
 
-		public CourceController(ICourceService _courceService)
+		public CourseController(ICourseService _courseService)
 		{
-			courceService= _courceService;
+			courseService = _courseService;
 		}
 
 		[HttpGet]
 		[AllowAnonymous]
 		public async Task<IActionResult> AllCourses()
 		{
+			//var model = await courseService.GetAllCoursesAsync();
+
+			//return View(model);
 			return View();
 		}
 	}
