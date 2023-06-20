@@ -126,43 +126,43 @@
 
 		[HttpGet]
 		[AllowAnonymous]
-        public IActionResult ForgotPassword()
+		public IActionResult ForgotPassword()
 		{
-            if (User?.Identity?.IsAuthenticated ?? false)
-            {
-                return RedirectToAction("Index", "Home");
-            }
+			if (User?.Identity?.IsAuthenticated ?? false)
+			{
+				return RedirectToAction("Index", "Home");
+			}
 
-            var model = new ForgotPasswordViewModel();
+			var model = new ForgotPasswordViewModel();
 
-            return View(model);
-        }
+			return View(model);
+		}
 
-        [HttpPost]
-        [AllowAnonymous]
-        [AutoValidateAntiforgeryToken]
-        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
+		[HttpPost]
+		[AllowAnonymous]
+		[AutoValidateAntiforgeryToken]
+		public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
+		{
+			if (!ModelState.IsValid)
+			{
+				return View(model);
+			}
 
-            var user = await userManager.FindByEmailAsync(model.Email);
+			var user = await userManager.FindByEmailAsync(model.Email);
 
-            if (user != null)
-            {
-                var result = await signInManager.PasswordSignInAsync(user, model.Password, false, false);
+			if (user != null)
+			{
+				var result = await signInManager.PasswordSignInAsync(user, model.Password, false, false);
 
-                if (result.Succeeded)
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-            }
+				if (result.Succeeded)
+				{
+					return RedirectToAction("Index", "Home");
+				}
+			}
 
-            ModelState.AddModelError("", "Invalid login");
+			ModelState.AddModelError("", "Invalid login");
 
-            return View(model);
-        }
-    }
+			return View(model);
+		}
+	}
 }
