@@ -448,12 +448,7 @@ namespace DobroKuche.Infrastructure.Migrations
                     b.Property<string>("RoleId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("AppUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("UserId", "RoleId");
-
-                    b.HasIndex("AppUserId");
 
                     b.HasIndex("RoleId");
 
@@ -588,10 +583,6 @@ namespace DobroKuche.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.HasOne("DobroKuche.Infrastructure.Data.Models.AppUser", null)
-                        .WithMany("Roles")
-                        .HasForeignKey("AppUserId");
-
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
@@ -621,8 +612,6 @@ namespace DobroKuche.Infrastructure.Migrations
                     b.Navigation("Articles");
 
                     b.Navigation("Dogs");
-
-                    b.Navigation("Roles");
                 });
 #pragma warning restore 612, 618
         }

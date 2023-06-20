@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DobroKuche.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20221125085630_CreateDb")]
-    partial class CreateDb
+    [Migration("20230616081055_CreateDB")]
+    partial class CreateDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -450,12 +450,7 @@ namespace DobroKuche.Infrastructure.Migrations
                     b.Property<string>("RoleId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("AppUserId")
-                        .HasColumnType("nvarchar(450)");
-
                     b.HasKey("UserId", "RoleId");
-
-                    b.HasIndex("AppUserId");
 
                     b.HasIndex("RoleId");
 
@@ -590,10 +585,6 @@ namespace DobroKuche.Infrastructure.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.HasOne("DobroKuche.Infrastructure.Data.Models.AppUser", null)
-                        .WithMany("Roles")
-                        .HasForeignKey("AppUserId");
-
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
@@ -623,8 +614,6 @@ namespace DobroKuche.Infrastructure.Migrations
                     b.Navigation("Articles");
 
                     b.Navigation("Dogs");
-
-                    b.Navigation("Roles");
                 });
 #pragma warning restore 612, 618
         }

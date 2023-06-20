@@ -2,8 +2,8 @@
 {
 	using DobroKuche.Infrastructure.Data.Models;
 	using DobroKuche.WebApp.Models;
-	using Microsoft.AspNetCore.Authorization;
-	using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Identity;
 	using Microsoft.AspNetCore.Mvc;
 
 	public class UserController : BaseController
@@ -123,5 +123,46 @@
 
 			return RedirectToAction("Index", "Home");
 		}
-	}
+
+		[HttpGet]
+		[AllowAnonymous]
+        public IActionResult ForgotPassword()
+		{
+            if (User?.Identity?.IsAuthenticated ?? false)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+
+            var model = new ForgotPasswordViewModel();
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [AutoValidateAntiforgeryToken]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await userManager.FindByEmailAsync(model.Email);
+
+            if (user != null)
+            {
+                var result = await signInManager.PasswordSignInAsync(user, model.Password, false, false);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+            }
+
+            ModelState.AddModelError("", "Invalid login");
+
+            return View(model);
+        }
+    }
 }

@@ -12,7 +12,7 @@
             Courses = new List<Course>();
             Articles = new List<Article>();
 			Appointments = new List<Appointment>();
-            Roles = new List<IdentityUserRole<string>>();
+            //Roles = new List<IdentityUserRole<string>>();
 			CreatedOn = DateTime.Now;
             IsDeleted = false;
         }
@@ -37,6 +37,6 @@
 
         public List<Appointment> Appointments { get; set; }
 
-        public List<IdentityUserRole<string>> Roles { get; set; }
+        //public List<IdentityUserRole<string>> Roles { get; set; }
     }
 }

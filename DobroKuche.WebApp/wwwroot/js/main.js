@@ -27,7 +27,6 @@
         $(window).resize(toggleNavbarMethod);
     });
 
-
     // Modal Video
     $(document).ready(function () {
         var $videoSrc;
@@ -45,7 +44,6 @@
         })
     });
     
-    
     // Back to top button
     $(window).scroll(function () {
         if ($(this).scrollTop() > 100) {
@@ -54,8 +52,9 @@
             $('.back-to-top').fadeOut('fast');
         }
     });
+
     $('.back-to-top').click(function () {
-        $('html, body').animate({scrollTop: 0}, 1500, 'easeInOutExpo');
+        $('html, body').animate({scrollTop: 0}, 100, 'easeInOutExpo');
         return false;
     });
 
@@ -87,7 +86,6 @@
         }
     });
 
-
     // Team carousel
     $(".team-carousel").owlCarousel({
         autoplay: true,
@@ -115,7 +113,6 @@
             }
         }
     });
-
 
     // Testimonials carousel
     $(".testimonial-carousel").owlCarousel({
